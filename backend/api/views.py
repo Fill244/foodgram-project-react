@@ -23,7 +23,7 @@ from .serializers import (IngredientSerializer, RecipeReadSerializer,
 class IngredientViewSet(ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    pagination_class = None
+    permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = IngredientFilter
 
@@ -31,7 +31,6 @@ class IngredientViewSet(ReadOnlyModelViewSet):
 class TagViewSet(ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    pagination_class = None
     permission_classes = (IsAdminOrReadOnly,)
 
 
@@ -113,7 +112,7 @@ class RecipeViewSet(ModelViewSet):
         purchases += '\n'.join([
             f'- {ingredient["ingredient__name"]} '
             f'({ingredient["ingredient__measurement_unit"]})'
-            f' - {ingredient["amount"]}'
+            f' - {ingredient["total"]}'
             for ingredient in ingredients
         ])
         purchases += f'\n\nFoodgram ({today:%Y})'

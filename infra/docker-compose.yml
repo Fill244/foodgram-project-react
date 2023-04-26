@@ -16,7 +16,9 @@ services:
     restart: always
 
   backend:
-    image: s1der/foodgrambackend:latest
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - static_value:/backend/static/
@@ -27,7 +29,9 @@ services:
       - .env
 
   frontend:
-    image: s1der/foodgramfrontend:latest
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
